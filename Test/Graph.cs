@@ -22,7 +22,7 @@ namespace Test
             Node<T> fromNode = Nodes.Find(x => x.Data.Equals(from));
             Node<T> toNode = Nodes.Find(x => x.Data.Equals(to));
 
-            if (!fromNode.Equals(default(T)) && !toNode.Equals(default(T)))
+            if (fromNode !=null && toNode !=null)
             {
                 fromNode.AddEdge(toNode);
                 toNode.AddEdge(fromNode);
