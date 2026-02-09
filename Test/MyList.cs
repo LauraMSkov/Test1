@@ -9,12 +9,12 @@ namespace Test
     internal class MyList<T>
     {
 
-        public static void AddToList(int a, List<T> b)
+        public static void AddToList(T a, List<T> b)
         {
             b.Add((T)Convert.ChangeType(a, typeof(T)));
         }
 
-        public static int FindInList(int a, List<int> b)
+        public static T FindInList(int a, List<T> b)
         {
             return b[a];
         }
@@ -24,23 +24,23 @@ namespace Test
             return a.Count;
         }
 
-        public static List<int> QuickSort(List<int> a, ref int comparisonCount)
+        public static List<T> QuickSort(List<T> a, IComparer<T> comparer, ref int comparisonQuick)
         {
             if (a.Count <= 1)
             {
                 return a;
             }
 
-            int pivot = a[0];
+            T pivot = a[0];
 
-            List<int> before = new List<int>();
-            List<int> after = new List<int>();
+            List<T> before = new List<T>();
+            List<T> after = new List<T>();
 
             for (int i = 1; i < a.Count; i++)
             {
-                comparisonCount++;
+                comparisonQuick++;
 
-                if (a[i] < pivot)
+                if (comparer.Compare(a[i], pivot) < 0)
                 {
                     before.Add(a[i]);
                 }
@@ -50,18 +50,18 @@ namespace Test
                 }
             }
 
-            List<int> result = new List<int>();
-            result.AddRange(QuickSort(before, ref comparisonCount));
+            List<T> result = new List<T>();
+            result.AddRange(QuickSort(before, comparer, ref comparisonQuick));
             result.Add(pivot);
-            result.AddRange(QuickSort(after, ref comparisonCount));
+            result.AddRange(QuickSort(after, comparer, ref comparisonQuick));
             return result;
         }
 
-        public static void InsertSort(List<int> b, ref int comparisonCount)
+        public static void InsertSort(List<T> b, ref int comparisonCount)
         {
             for (int i = 1; i < b.Count; i++)
             {
-                int val = b[i];
+                T val = b[i];
                 int pointer = i;
 
                 //Kode gøre  længere så man sikre sig at tælle sammenligningen korrekt med Count

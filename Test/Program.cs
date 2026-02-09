@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Test
 {
-    internal class Program<T>
+    internal class Program
     {
         static void Main(string[] args)
         {
             List<int> list = new List<int>();
 
             int comparisonCount = 0;
-            MyList<T>.InsertSort(list, ref comparisonCount);
+            MyList<int>.InsertSort(list, ref comparisonCount);
             Console.WriteLine("Sammenligninger: " + comparisonCount);
 
             int comparisonQuick = 0;
-            List<int> sorted = MyList<T>.QuickSort(list, ref comparisonQuick);
+            List<int> sorted = MyList<int>.QuickSort(list, Comparer<int>.Default, ref comparisonQuick);
             Console.WriteLine("Sammenligninger: " + comparisonQuick);
 
             Graph<string> graph = new Graph<string>();
