@@ -21,6 +21,12 @@ namespace Test
             Console.WriteLine("Sammenligninger: " + comparisonQuick);
 
             Graph<string> graph = new Graph<string>();
+
+            string filepath = "notSorted.json";
+            using (StreamReader r = new StreamReader(filepath))
+            string json = r.ReadToEnd();
+            Console.WriteLine(json);
+            Console.ReadKey();
         }
     }
 }
