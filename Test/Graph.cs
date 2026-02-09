@@ -10,24 +10,11 @@ namespace Test
     internal class Graph<T>
     {
         public List<Node<T>> Nodes { get; private set; } = new List<Node<T>>();
+        private Dictionary<T, List<T>> adj = new Dictionary<T, List<T>>();
 
         public void AddNode(T node)
         {
             Nodes.Add(new Node<T>(node));
-        }
-
-        public void AddDirectedEdge(T from, T to)
-        {
-            Node<T> fromNode = Nodes.Find(x => x.Data.Equals(from));
-            Node<T> toNode = Nodes.Find(x => x.Data.Equals(to));
-            if (!fromNode.Equals(default(T)) && !toNode.Equals(default(T)))
-            {
-                fromNode.AddEdge(toNode);
-            }
-            else
-            {
-                Console.WriteLine("Node ikke fundet");
-            }
         }
 
         public void AddEdge(T from, T to)
@@ -44,7 +31,6 @@ namespace Test
             {
                 Console.WriteLine("Node ikke fundet");
             }
-
         }
 
         public static Node<T> DFS<T>(Node<T> start, Node<T> goal)
