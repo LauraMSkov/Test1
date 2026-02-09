@@ -10,6 +10,15 @@ namespace Test
     {
         static void Main(string[] args)
         {
+            List<int> list = new List<int>();
+
+            int comparisonCount = 0;
+            MyList<T>.InsertSort(list, ref comparisonCount);
+            Console.WriteLine("Sammenligninger: " + comparisonCount);
+
+            int comparisonQuick = 0;
+            List<int> sorted = MyList<T>.QuickSort(list, ref comparisonQuick);
+            Console.WriteLine("Sammenligninger: " + comparisonQuick);
         }
     }
 }
