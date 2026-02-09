@@ -65,6 +65,11 @@ namespace Test
                 {
                     return edge.To;
                 }
+
+                foreach (Edge<T> e in edge.To.Edges)
+                {
+
+                }
             }
 
             return null;
