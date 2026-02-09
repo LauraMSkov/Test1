@@ -9,7 +9,7 @@ namespace Test
 {
     internal class Graph<T>
     {
-        public List<Node<T>> Nodes { get; set; } = new List<Node<T>>();
+        public List<Node<T>> Nodes { get; private set; } = new List<Node<T>>();
 
         public void AddNode(T node)
         {
@@ -47,7 +47,7 @@ namespace Test
 
         }
 
-        private static Node<T> DFS<T>(Node<T> start, Node<T> goal)
+        public static Node<T> DFS<T>(Node<T> start, Node<T> goal)
         {
             Stack<Edge<T>> edges = new Stack<Edge<T>>();
             edges.Push(new Edge<T>(start, start));
@@ -68,7 +68,10 @@ namespace Test
 
                 foreach (Edge<T> e in edge.To.Edges)
                 {
-
+                    if (!e.To.Visited)
+                    {
+                        edges.Push(e);
+                    }
                 }
             }
 
