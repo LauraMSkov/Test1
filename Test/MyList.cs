@@ -57,7 +57,7 @@ namespace Test
             return result;
         }
 
-        public static void InsertSort(List<T> b, ref int comparisonCount)
+        public static void InsertSort(List<T> b, IComparer<T> comparer, ref int comparisonCount)
         {
             for (int i = 1; i < b.Count; i++)
             {
@@ -68,7 +68,7 @@ namespace Test
                 while (pointer > 0)
                 {
                     comparisonCount++;
-                    if (b[pointer - 1] > val)
+                    if (comparer.Compare(b[pointer - 1], val) > 0)
                     {
                         b[pointer] = b[pointer - 1];
                         pointer--;

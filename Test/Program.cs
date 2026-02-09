@@ -14,7 +14,7 @@ namespace Test
             List<int> list = new List<int>();
 
             int comparisonCount = 0;
-            MyList<int>.InsertSort(list, ref comparisonCount);
+            MyList<int>.InsertSort(list, Comparer<int>.Default, ref comparisonCount);
             Console.WriteLine("Sammenligninger: " + comparisonCount);
 
             int comparisonQuick = 0;
