@@ -13,11 +13,11 @@ namespace Test
             List<int> list = new List<int>();
 
             int comparisonCount = 0;
-            MyList<T>.InsertSort(list, ref comparisonCount);
+            MyList<int>.InsertSort(list, ref comparisonCount);
             Console.WriteLine("Sammenligninger: " + comparisonCount);
 
             int comparisonQuick = 0;
-            List<int> sorted = MyList<T>.QuickSort(list, ref comparisonQuick);
+            List<int> sorted = MyList<int>.QuickSort(list, Comparer<int>.Default, ref comparisonQuick);
             Console.WriteLine("Sammenligninger: " + comparisonQuick);
 
             Graph<string> graph = new Graph<string>();
@@ -48,29 +48,6 @@ namespace Test
 
             //Tilføjer Kanter fra Climbing Tower
             graph.AddEdge("Climbing Tower", "Volcano Ride");
-        }
-
-        private static Node<T> DFS<T>(Node<T> start, Node<T> goal)
-        {
-            Stack<Edge<T>> edges = new Stack<Edge<T>>();
-            edges.Push(new Edge<T>(start, start));
-
-            while (edges.Count > 0)
-            {
-                Edge<T> edge = edges.Pop();
-
-                if (!edge.To.Visited)
-                {
-                    edge.To.Visited = true;
-                    edge.To.Parent = edge.From;
-                }
-                if(edge.To == goal)
-                {
-                    return edge.To;
-                }
-            }
-
-            return null;
         }
     }
 }

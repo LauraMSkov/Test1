@@ -14,17 +14,17 @@ namespace Test
             b.Add((T)Convert.ChangeType(a, typeof(T)));
         }
 
-        public static T FindInList(T a, List<T> b)
+        public static T FindInList(int a, List<T> b)
         {
             return b[a];
         }
 
-        public static T ListLength(List<T> a)
+        public static int ListLength(List<T> a)
         {
             return a.Count;
         }
 
-        public static List<T> QuickSort(List<T> a, ref int comparisonCount)
+        public static List<T> QuickSort(List<T> a, IComparer<T> comparer, ref int comparisonQuick)
         {
             if (a.Count <= 1)
             {
@@ -38,9 +38,9 @@ namespace Test
 
             for (int i = 1; i < a.Count; i++)
             {
-                comparisonCount++;
+                comparisonQuick++;
 
-                if (a[i] < pivot)
+                if (comparer.Compare(a[i], pivot) < 0)
                 {
                     before.Add(a[i]);
                 }
@@ -51,17 +51,17 @@ namespace Test
             }
 
             List<T> result = new List<T>();
-            result.AddRange(QuickSort(before, ref comparisonCount));
+            result.AddRange(QuickSort(before, comparer, ref comparisonQuick));
             result.Add(pivot);
-            result.AddRange(QuickSort(after, ref comparisonCount));
+            result.AddRange(QuickSort(after, comparer, ref comparisonQuick));
             return result;
         }
 
-        public static void InsertSort(List<int> b, ref int comparisonCount)
+        public static void InsertSort(List<T> b, ref int comparisonCount)
         {
             for (int i = 1; i < b.Count; i++)
             {
-                int val = b[i];
+                T val = b[i];
                 int pointer = i;
 
                 //Kode gøre  længere så man sikre sig at tælle sammenligningen korrekt med Count
