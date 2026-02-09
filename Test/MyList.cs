@@ -9,12 +9,12 @@ namespace Test
     internal class MyList<T>
     {
 
-        public static AddToList(int a, List<T> b)
+        public static void AddToList(int a, List<T> b)
         {
             b.Add((T)Convert.ChangeType(a, typeof(T)));
         }
 
-        public static int FindInList(int a, List<T> b)
+        public static int FindInList(int a, List<int> b)
         {
             return b[a];
         }
