@@ -19,6 +19,8 @@ namespace Test
             int comparisonQuick = 0;
             List<int> sorted = MyList<T>.QuickSort(list, ref comparisonQuick);
             Console.WriteLine("Sammenligninger: " + comparisonQuick);
+
+            Graph<string> graph = new Graph<string>();
         }
     }
 }
