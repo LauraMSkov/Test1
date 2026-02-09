@@ -8,6 +8,22 @@ namespace Test
 {
     internal class MyList<T>
     {
+
+        public static AddToList(int a, List<T> b)
+        {
+            b.Add((T)Convert.ChangeType(a, typeof(T)));
+        }
+
+        public static int FindInList(int a, List<T> b)
+        {
+            return b[a];
+        }
+
+        public static int ListLength(List<T> a)
+        {
+            return a.Count;
+        }
+
         public static List<int> QuickSort(List<int> a, ref int comparisonCount)
         {
             if (a.Count <= 1)
