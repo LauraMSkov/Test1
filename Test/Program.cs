@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Test
 {
-    internal class Program<T>
+    internal class Program
     {
         static void Main(string[] args)
         {
@@ -48,6 +48,29 @@ namespace Test
 
             //Tilføjer Kanter fra Climbing Tower
             graph.AddEdge("Climbing Tower", "Volcano Ride");
+        }
+
+        private static Node<T> DFS<T>(Node<T> start, Node<T> goal)
+        {
+            Stack<Edge<T>> edges = new Stack<Edge<T>>();
+            edges.Push(new Edge<T>(start, start));
+
+            while (edges.Count > 0)
+            {
+                Edge<T> edge = edges.Pop();
+
+                if (!edge.To.Visited)
+                {
+                    edge.To.Visited = true;
+                    edge.To.Parent = edge.From;
+                }
+                if(edge.To == goal)
+                {
+                    return edge.To;
+                }
+            }
+
+            return null;
         }
     }
 }
