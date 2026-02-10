@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace Test
 {
@@ -70,7 +72,50 @@ namespace Test
 
 
         }
+        public int[] LoadJson(int a)
+        {
+            string startPath = AppContext.BaseDirectory; ;
+            if (a == 1)
+            {
+                startPath = Path.Combine(startPath, @"JSON files\sorted.json");
+            }
+            else if (a == 2)
+            {
+                startPath = Path.Combine(startPath, @"JSON files\reverseSorted.json");
+            }
+            else if (a == 3)
+            {
+                startPath = Path.Combine(startPath, @"JSON files\notSorted.json");
+            }
 
+            string JsonString = File.ReadAllText(startPath);
+            var Jsondata = JsonSerializer.Deserialize<NumbersData>(JsonString);
+            int[] values = (Jsondata != null && Jsondata.Values != null) ? Jsondata.Values : Array.Empty<int>();
+            return values;
+        }
+
+        public void WriteJson(int[] values, int a)
+        {
+            string startPath = AppContext.BaseDirectory; ;
+            if (a == 1)
+            {
+                startPath = Path.Combine(startPath, @"JSON files\sorted.json");
+            }
+            else if (a == 2)
+            {
+                startPath = Path.Combine(startPath, @"JSON files\reverseSorted.json");
+            }
+            else if (a == 3)
+            {
+                startPath = Path.Combine(startPath, @"JSON files\notSorted.json");
+            }
+            File.WriteAllText(startPath, values.ToString());
+        }
+        public class NumbersData
+        {
+            [JsonPropertyName("values")]
+            public int[] Values { get; set; } = Array.Empty<int>();
+        }
     }
 
 }
