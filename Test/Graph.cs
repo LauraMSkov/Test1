@@ -9,33 +9,19 @@ namespace Test
 {
     internal class Graph<T>
     {
-        public List<Node<T>> Nodes { get; set; } = new List<Node<T>>();
+        public List<Node<T>> Nodes { get; private set; } = new List<Node<T>>();
 
         public void AddNode(T node)
         {
             Nodes.Add(new Node<T>(node));
         }
 
-        public void AddDirectedEdge(T from, T to)
-        {
-            Node<T> fromNode = Nodes.Find(x => x.Data.Equals(from));
-            Node<T> toNode = Nodes.Find(x => x.Data.Equals(to));
-            if (!fromNode.Equals(default(T)) && !toNode.Equals(default(T)))
-            {
-                fromNode.AddEdge(toNode);
-            }
-            else
-            {
-                Console.WriteLine("Node ikke fundet");
-            }
-        }
-
         public void AddEdge(T from, T to)
         {
-            Node<T> fromNode = Nodes.Find(x => x.Data.Equals(from));
-            Node<T> toNode = Nodes.Find(x => x.Data.Equals(to));
+            Node<T> fromNode = null;
+            Node<T> toNode = null;
 
-            if (!fromNode.Equals(default(T)) && !toNode.Equals(default(T)))
+            if (fromNode !=null && toNode !=null)
             {
                 fromNode.AddEdge(toNode);
                 toNode.AddEdge(fromNode);
@@ -44,10 +30,9 @@ namespace Test
             {
                 Console.WriteLine("Node ikke fundet");
             }
-
         }
 
-        private static Node<T> DFS<T>(Node<T> start, Node<T> goal)
+        public static Node<T> DFS<T>(Node<T> start, Node<T> goal)
         {
             Stack<Edge<T>> edges = new Stack<Edge<T>>();
             edges.Push(new Edge<T>(start, start));
@@ -68,7 +53,10 @@ namespace Test
 
                 foreach (Edge<T> e in edge.To.Edges)
                 {
-
+                    if (!e.To.Visited)
+                    {
+                        edges.Push(e);
+                    }
                 }
             }
 
