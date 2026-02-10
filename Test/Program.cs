@@ -99,15 +99,15 @@ namespace Test
             string startPath = AppContext.BaseDirectory; ;
             if (a == 1)
             {
-                startPath = Path.Combine(startPath, @"JSON files\sorted.json");
+                startPath = Path.Combine(startPath, @"JSON files\postSorted.json");
             }
             else if (a == 2)
             {
-                startPath = Path.Combine(startPath, @"JSON files\reverseSorted.json");
+                startPath = Path.Combine(startPath, @"JSON files\postReverseSorted.json");
             }
             else if (a == 3)
             {
-                startPath = Path.Combine(startPath, @"JSON files\notSorted.json");
+                startPath = Path.Combine(startPath, @"JSON files\postNotSorted.json");
             }
             File.WriteAllText(startPath, values.ToString());
         }
