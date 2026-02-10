@@ -10,8 +10,9 @@ namespace Test
     internal class Graph<T>
     {
         public List<Node<T>> Nodes { get; private set; } = new List<Node<T>>();
+        public List<Edge<T>> Edges { get; private set; } = new List<Edge<T>>();
 
-        public void AddNode(T node)
+        /*public void AddNode(T node)
         {
             Nodes.Add(new Node<T>(node));
         }
@@ -20,6 +21,27 @@ namespace Test
         {
             Node<T> fromNode = null;
             Node<T> toNode = null;
+
+            //Finder from noden
+            foreach (Node<T> node in Nodes)
+            {
+                //Man kn risikere at node.Data kan være null, og for at håndtere det sikret skrives kode på understående måde
+                if (Equals(node.Data, from))
+                {
+                    fromNode = node;
+                    break;
+                }
+            }
+
+            //Finder to noden
+            foreach(Node<T> node in Nodes)
+            {
+                if (Equals(node.Data, to))
+                {
+                    toNode = node;
+                    break;
+                }
+            }
 
             if (fromNode !=null && toNode !=null)
             {
@@ -30,32 +52,45 @@ namespace Test
             {
                 Console.WriteLine("Node ikke fundet");
             }
-        }
+        }*/
 
-        public static Node<T> DFS<T>(Node<T> start, Node<T> goal)
+        public static Node<T> DFS<T>(Node<T> start, Node<T> goal, List<Edge<T>> graphEdges)
         {
-            Stack<Edge<T>> edges = new Stack<Edge<T>>();
-            edges.Push(new Edge<T>(start, start));
-
-            while (edges.Count > 0)
+            if (start == null || goal == null)
             {
-                Edge<T> edge = edges.Pop();
+                return null;
+            }
+            
+            Stack<Node<T>> stack = new Stack<Node<T>>();
+            stack.Push(start);
+            start.Visited = true;
 
-                if (!edge.To.Visited)
+            while (stack.Count > 0)
+            {
+                Node<T> current = stack.Pop();
+
+                if (current == goal)
                 {
-                    edge.To.Visited = true;
-                    edge.To.Parent = edge.From;
-                }
-                if (edge.To == goal)
-                {
-                    return edge.To;
+                    return current;
                 }
 
-                foreach (Edge<T> e in edge.To.Edges)
+                foreach (Edge<T> e in graphEdges)
                 {
-                    if (!e.To.Visited)
+                    Node<T> neighbor = null;
+
+                    if (e.From == current && !e.To.Visited)
                     {
-                        edges.Push(e);
+                        neighbor = e.To;
+                    }
+                    else if (e.To == current && !e.From.Visited)
+                    {
+                        neighbor = e.From;
+                    }
+                    if (neighbor != null)
+                    {
+                        neighbor.Visited = true;
+                        neighbor.Parent = current;
+                        stack.Push(neighbor);
                     }
                 }
             }
@@ -63,6 +98,28 @@ namespace Test
             return null;
         }
 
+        public static void PrintPath(Node<T> goalNode)
+        {
+            if (goalNode == null)
+            {
+                Console.WriteLine("Path ikke fundet");
+                return;
+            }
+
+            List<T> path = new List<T>();
+            Node<T> current = goalNode;
+
+            while(current != null)
+            {
+                path.Add(current.Data);
+                current = current.Parent;
+            }
+
+            for (int i = path.Count - 1; i >= 0; i--)
+            {
+                Console.WriteLine(path[i]);
+            }
+        }
       
     }
  

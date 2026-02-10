@@ -17,13 +17,15 @@ namespace Test
 
         public Node(T data)
         {
-            this.Data = data;
+            Data = data;
+            Visited = true;
+            Parent = null;
         }
 
-        public void AddEdge(Node<T> other)
+        /*public void AddEdge(Node<T> other)
         {
             Edges.Add(new Edge<T>(this, other));
-        }
+        }*/
     }
 
 }

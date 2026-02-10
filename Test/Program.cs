@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+using System.Text.Json;
 
 namespace Test
 {
@@ -29,105 +24,53 @@ namespace Test
 
             Graph<string> graph = new Graph<string>();
 
-            string startPath = AppContext.BaseDirectory;
-            string fileNr = Console.ReadLine();
-            if (fileNr == "1")
-            {
-                startPath = Path.Combine(startPath, @"JSON files\sorted.json");
-            }
-            else if (fileNr == "2")
-            {
-                startPath = Path.Combine(startPath, @"JSON files\reverseSorted.json");
-            }
-            else if (fileNr == "3")
-            {
-                startPath = Path.Combine(startPath, @"JSON files\notSorted.json");
-            }
-            else
-            {
-                Console.WriteLine("Invalid input. Please enter 1, 2, or 3.");
-                return;
-            }
-
-            string JsonString = File.ReadAllText(startPath);
-            var Jsondata = JsonSerializer.Deserialize<NumbersData>(JsonString);
-            int[] values = (Jsondata != null && Jsondata.Values != null) ? Jsondata.Values : Array.Empty<int>();
-
-            for (int i = 0; i < values.Length; i++)
-            {
-                Console.WriteLine(values[i]);
-            }
-            Console.ReadKey();
-
-
             //Tilføjer nodes
-            /*graph.AddNode("Entrance");
-            graph.AddNode("Carousel");
-            graph.AddNode("Mini Train");
-            graph.AddNode("Ice Cream");
-            graph.AddNode("Roller Coaster");
-            graph.AddNode("Haunted");
-            graph.AddNode("Water Ride");
-            graph.AddNode("Pirate Ship");
-            graph.AddNode("Climbing Tower");
-            graph.AddNode("Volcano Ride");
+            Node<string> entrance = new Node<string>("Entrance");
+            Node<string> miniTrain = new Node<string>("Mini Train");
+            Node<string> waterRide = new Node<string>("Water Ride");
 
-            //Tilføjer kanter fra Indgang
-            graph.AddEdge("Entrance", "Carousel");
-            graph.AddEdge("Entrance", "Mini Train");
-            graph.AddEdge("Entrance", "Ice Cream");
+            //Tilføjer node til graf
+            graph.Nodes.Add(entrance);
+            graph.Nodes.Add(miniTrain);
+            graph.Nodes.Add(waterRide);
 
-            //Tilføjer kanter fra Carousel
-            graph.AddEdge("Carousel", "Mini Train");
-            graph.AddEdge("Carousel", "Ice Cream");
-            graph.AddEdge("Carousel", "Roller Coaster");
-            graph.AddEdge("Carousel", "Haunted House");
+            graph.Edges.Add(new Edge<string>(entrance, miniTrain));
+            graph.Edges.Add(new Edge<string>(miniTrain, waterRide));
 
-            //Tilføjer kanter fra Haunted House
-            graph.AddEdge("Haunted House", "Mini Train");
+            //Vi laver først variabler som holder noderne vil leder efter
+            Node<string> startNode = null;
 
-            //Tilføjer kanter fra Roller Coaster
-            graph.AddEdge("Roller Coaster", "Mini Train");
-            graph.AddEdge("Roller Coaster", "Climbing Tower");
-
-            //Tilføjer Kanter fra Climbing Tower
-            graph.AddEdge("Climbing Tower", "Volcano Ride");
-
-            //Tilføjer kanter fra Mini Train
-            graph.AddEdge("Mini Train", "Water Ride");
-
-            //Tilføjer kanter fra Ice Cream
-            graph.AddEdge("Ice Cream", "Pirate Ship");
-
-            Node<string> n = Graph<string>.DFS<string>(graph.Nodes.Find(x => x.Data == "Entrance"), graph.Nodes.Find(x => x.Data == "Volcano Ride"));
-            List<Node<string>> path = TrackPath<string>(n, graph.Nodes.Find(x => x.Data == "Entrance"));
-            Console.WriteLine("DFS vej fra Entrance til Volcano Ride");
-            foreach (Node<string> pathNode in path)
+            //Vi finder nu start noden gennem et foreach loop
+            foreach (Node<string> node in graph.Nodes)
             {
-                Console.WriteLine(pathNode.Data);
+                if (node.Data == "Entrance")
+                {
+                    startNode = node;
+                    break;
+                }
             }
 
-
-        }
-
-        private static List<Node<T>> TrackPath<T>(Node<T> node, Node<T> start)
-        {
-            List<Node<T>> path = new List<Node<T>>();
-
-            while (!node.Equals(start))
+            //Vi finder nu slut noden gennem et foreach loop
+            Node<string> goalNode = null;
+            foreach (Node<string> node in graph.Nodes)
             {
-                path.Add(node);
-                node = node.Parent;
+                if (node.Data == "Water Ride")
+                {
+                    goalNode = node;
+                    break;
+                }
             }
 
-            path.Add(start);
-            path.Reverse();
-            return path;*/
+            //Vi kalder nu vores DFS
+            Node<string> result = Graph<string>.DFS<string>(startNode, goalNode, graph.Edges);
+
+            Console.WriteLine("DFS vej fra Entrance til Water Ride");
+            Graph<string>.PrintPath(result);
+
+
+
         }
-        public class NumbersData
-        {
-            [JsonPropertyName("values")]
-            public int[] Values { get; set; } = Array.Empty<int>();
-        }
+
     }
+
 }

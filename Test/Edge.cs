@@ -13,8 +13,8 @@ namespace Test
 
         public Edge(Node<T> from, Node<T> to)
         {
-            this.From = from;
-            this.To = to;
+            From = from;
+            To = to;
         }
     }
 }
