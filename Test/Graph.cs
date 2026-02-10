@@ -100,12 +100,7 @@ namespace Test
 
         public static void PrintPath(Node<T> goalNode)
         {
-            if (goalNode == null)
-            {
-                Console.WriteLine("Path ikke fundet");
-                return;
-            }
-
+           
             List<T> path = new List<T>();
             Node<T> current = goalNode;
 
@@ -115,10 +110,18 @@ namespace Test
                 current = current.Parent;
             }
 
+            if (goalNode == null)
+            {
+                Console.WriteLine("Path ikke fundet");
+                return;
+            }
+
             for (int i = path.Count - 1; i >= 0; i--)
             {
                 Console.WriteLine(path[i]);
             }
+
+
         }
       
     }
