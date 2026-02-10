@@ -10,7 +10,6 @@ namespace Test
     internal class Graph<T>
     {
         public List<Node<T>> Nodes { get; private set; } = new List<Node<T>>();
-        private Dictionary<T, List<T>> adj = new Dictionary<T, List<T>>();
 
         public void AddNode(T node)
         {
@@ -19,8 +18,8 @@ namespace Test
 
         public void AddEdge(T from, T to)
         {
-            Node<T> fromNode = Nodes.Find(x => x.Data.Equals(from));
-            Node<T> toNode = Nodes.Find(x => x.Data.Equals(to));
+            Node<T> fromNode = null;
+            Node<T> toNode = null;
 
             if (fromNode !=null && toNode !=null)
             {

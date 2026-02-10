@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace Test
 {
@@ -15,11 +16,11 @@ namespace Test
 
             int comparisonCount = 0;
             MyList<int>.InsertSort(list, Comparer<int>.Default, ref comparisonCount);
-            Console.WriteLine("Sammenligninger: " + comparisonCount);
+            Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
 
             int comparisonQuick = 0;
             List<int> sorted = MyList<int>.QuickSort(list, Comparer<int>.Default, ref comparisonQuick);
-            Console.WriteLine("Sammenligninger: " + comparisonQuick);
+            Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
 
             Graph<string> graph = new Graph<string>();
 
@@ -69,6 +70,8 @@ namespace Test
             {
                 Console.WriteLine(pathNode.Data);
             }
+
+            
         }
 
         private static List<Node<T>> TrackPath<T>(Node<T> node, Node<T> start)
