@@ -25,44 +25,20 @@ namespace Test
             Graph<string> graph = new Graph<string>();
 
             //Tilføjer nodes
-            graph.AddNode("Entrance");
-            graph.AddNode("Carousel");
-            graph.AddNode("Mini Train");
-            graph.AddNode("Ice Cream");
-            graph.AddNode("Roller Coaster");
-            graph.AddNode("Haunted");
-            graph.AddNode("Water Ride");
-            graph.AddNode("Pirate Ship");
-            graph.AddNode("Climbing Tower");
-            graph.AddNode("Volcano Ride");
+            Node<string> entrance = new Node<string>("Entrance");
+            Node<string> miniTrain = new Node<string>("Mini Train");
+            Node<string> waterRide = new Node<string>("Water Ride");
 
-            //Tilføjer kanter fra Indgang
-            graph.AddEdge("Entrance", "Carousel");
-            graph.AddEdge("Entrance", "Mini Train");
-            graph.AddEdge("Entrance", "Ice Cream");
+            //Tilføjer node til graf
+            graph.Nodes.Add(entrance);
+            graph.Nodes.Add(miniTrain);
+            graph.Nodes.Add(waterRide);
 
-            //Tilføjer kanter fra Carousel
-            graph.AddEdge("Carousel", "Roller Coaster");
-            graph.AddEdge("Carousel", "Haunted House");
-
-            //Tilføjer kanter fra Haunted House
-            graph.AddEdge("Haunted House", "Mini Train");
-
-            //Tilføjer kanter fra Roller Coaster
-            graph.AddEdge("Roller Coaster", "Climbing Tower");
-
-            //Tilføjer Kanter fra Climbing Tower
-            graph.AddEdge("Climbing Tower", "Volcano Ride");
-
-            //Tilføjer kanter fra Mini Train
-            graph.AddEdge("Mini Train", "Water Ride");
-
-            //Tilføjer kanter fra Ice Cream
-            graph.AddEdge("Ice Cream", "Pirate Ship");
+            graph.Edges.Add(new Edge<string>(entrance, miniTrain));
+            graph.Edges.Add(new Edge<string>(miniTrain, waterRide));
 
             //Vi laver først variabler som holder noderne vil leder efter
             Node<string> startNode = null;
-            Node<string> endNode = null;
 
             //Vi finder nu start noden gennem et foreach loop
             foreach (Node<string> node in graph.Nodes)
@@ -75,36 +51,26 @@ namespace Test
             }
 
             //Vi finder nu slut noden gennem et foreach loop
+            Node<string> goalNode = null;
             foreach (Node<string> node in graph.Nodes)
             {
                 if (node.Data == "Water Ride")
                 {
-                    endNode = node;
+                    goalNode = node;
                     break;
                 }
             }
 
             //Vi kalder nu vores DFS
-            Node<string> n = Graph<string>.DFS<string>(startNode, endNode, graph.Edges);
+            Node<string> result = Graph<string>.DFS<string>(startNode, goalNode, graph.Edges);
 
-            //Vi looper nu path ud
             Console.WriteLine("DFS vej fra Entrance til Water Ride");
-            Node<string> current = n;
+            Graph<string>.PrintPath(result);
 
-            while (current != null)
-            {
-                Console.WriteLine(current.Data);
-                current = current.Parent;
-            }
 
-            
+
         }
 
-    
-        
     }
-
-
-
 
 }

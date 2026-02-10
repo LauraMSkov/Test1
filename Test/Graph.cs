@@ -12,7 +12,7 @@ namespace Test
         public List<Node<T>> Nodes { get; private set; } = new List<Node<T>>();
         public List<Edge<T>> Edges { get; private set; } = new List<Edge<T>>();
 
-        public void AddNode(T node)
+        /*public void AddNode(T node)
         {
             Nodes.Add(new Node<T>(node));
         }
@@ -52,7 +52,7 @@ namespace Test
             {
                 Console.WriteLine("Node ikke fundet");
             }
-        }
+        }*/
 
         public static Node<T> DFS<T>(Node<T> start, Node<T> goal, List<Edge<T>> graphEdges)
         {
@@ -98,6 +98,28 @@ namespace Test
             return null;
         }
 
+        public static void PrintPath(Node<T> goalNode)
+        {
+            if (goalNode == null)
+            {
+                Console.WriteLine("Path ikke fundet");
+                return;
+            }
+
+            List<T> path = new List<T>();
+            Node<T> current = goalNode;
+
+            while(current != null)
+            {
+                path.Add(current.Data);
+                current = current.Parent;
+            }
+
+            for (int i = path.Count - 1; i >= 0; i--)
+            {
+                Console.WriteLine(path[i]);
+            }
+        }
       
     }
  
