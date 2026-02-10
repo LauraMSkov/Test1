@@ -21,6 +21,27 @@ namespace Test
             Node<T> fromNode = null;
             Node<T> toNode = null;
 
+            //Finder from noden
+            foreach (Node<T> node in Nodes)
+            {
+                //Man kn risikere at node.Data kan være null, og for at håndtere det sikret skrives kode på understående måde
+                if (Equals(node.Data, from))
+                {
+                    fromNode = node;
+                    break;
+                }
+            }
+
+            //Finder to noden
+            foreach(Node<T> node in Nodes)
+            {
+                if (Equals(node.Data, to))
+                {
+                    toNode = node;
+                    break;
+                }
+            }
+
             if (fromNode !=null && toNode !=null)
             {
                 fromNode.AddEdge(toNode);

@@ -42,8 +42,6 @@ namespace Test
             graph.AddEdge("Entrance", "Ice Cream");
 
             //Tilføjer kanter fra Carousel
-            graph.AddEdge("Carousel", "Mini Train");
-            graph.AddEdge("Carousel", "Ice Cream");
             graph.AddEdge("Carousel", "Roller Coaster");
             graph.AddEdge("Carousel", "Haunted House");
 
@@ -51,7 +49,6 @@ namespace Test
             graph.AddEdge("Haunted House", "Mini Train");
 
             //Tilføjer kanter fra Roller Coaster
-            graph.AddEdge("Roller Coaster", "Mini Train");
             graph.AddEdge("Roller Coaster", "Climbing Tower");
 
             //Tilføjer Kanter fra Climbing Tower
