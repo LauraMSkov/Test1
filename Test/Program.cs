@@ -87,11 +87,15 @@ namespace Test
             //Vi kalder nu vores DFS
             Node<string> n = Graph<string>.DFS<string>(startNode, endNode);
 
-            Console.WriteLine("DFS vej fra Entrance til Volcano Ride");
-            /*foreach (Node<string> pathNode in path)
+            //Vi looper nu path ud
+            Console.WriteLine("DFS vej fra Entrance til Water Ride");
+            Node<string> current = n;
+
+            while (current != null)
             {
-                Console.WriteLine(pathNode.Data);
-            }*/
+                Console.WriteLine(current.Data);
+                current = current.Parent;
+            }
 
             
         }

@@ -10,6 +10,7 @@ namespace Test
     internal class Graph<T>
     {
         public List<Node<T>> Nodes { get; private set; } = new List<Node<T>>();
+        public List<Edge<T>> Edges { get; private set} = new List<Edge<T>>();
 
         public void AddNode(T node)
         {
