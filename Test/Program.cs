@@ -60,31 +60,44 @@ namespace Test
             //Tilføjer kanter fra Ice Cream
             graph.AddEdge("Ice Cream", "Pirate Ship");
 
-            Node<string> n = Graph<string>.DFS<string>(graph.Nodes.Find(x => x.Data == "Entrance"), graph.Nodes.Find(x => x.Data == "Volcano Ride"));
-            List<Node<string>> path = TrackPath<string>(n, graph.Nodes.Find(x => x.Data == "Entrance"));
+            //Vi laver først variabler som holder noderne vil leder efter
+            Node<string> startNode = null;
+            Node<string> endNode = null;
+
+            //Vi finder nu start noden gennem et foreach loop
+            foreach (Node<string> node in graph.Nodes)
+            {
+                if (node.Data == "Entrance")
+                {
+                    startNode = node;
+                    break;
+                }
+            }
+
+            //Vi finder nu slut noden gennem et foreach loop
+            foreach (Node<string> node in graph.Nodes)
+            {
+                if (node.Data == "Water Ride")
+                {
+                    endNode = node;
+                    break;
+                }
+            }
+
+            //Vi kalder nu vores DFS
+            Node<string> n = Graph<string>.DFS<string>(startNode, endNode);
+
             Console.WriteLine("DFS vej fra Entrance til Volcano Ride");
-            foreach (Node<string> pathNode in path)
+            /*foreach (Node<string> pathNode in path)
             {
                 Console.WriteLine(pathNode.Data);
-            }
+            }*/
 
             
         }
 
-        private static List<Node<T>> TrackPath<T>(Node<T> node, Node<T> start)
-        {
-            List<Node<T>> path = new List<Node<T>>();
-
-            while (!node.Equals(start))
-            {
-                path.Add(node);
-                node = node.Parent;
-            }
-
-            path.Add(start);
-            path.Reverse();
-            return path;
-        }
+    
+        
     }
 
 
