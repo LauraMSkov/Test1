@@ -10,7 +10,7 @@ namespace Test
     internal class Graph<T>
     {
         public List<Node<T>> Nodes { get; private set; } = new List<Node<T>>();
-        public List<Edge<T>> Edges { get; private set} = new List<Edge<T>>();
+        public List<Edge<T>> Edges { get; private set; } = new List<Edge<T>>();
 
         public void AddNode(T node)
         {
@@ -54,30 +54,43 @@ namespace Test
             }
         }
 
-        public static Node<T> DFS<T>(Node<T> start, Node<T> goal)
+        public static Node<T> DFS<T>(Node<T> start, Node<T> goal, List<Edge<T>> graphEdges)
         {
-            Stack<Edge<T>> edges = new Stack<Edge<T>>();
-            edges.Push(new Edge<T>(start, start));
-
-            while (edges.Count > 0)
+            if (start == null || goal == null)
             {
-                Edge<T> edge = edges.Pop();
+                return null;
+            }
+            
+            Stack<Node<T>> stack = new Stack<Node<T>>();
+            stack.Push(start);
+            start.Visited = true;
 
-                if (!edge.To.Visited)
+            while (stack.Count > 0)
+            {
+                Node<T> current = stack.Pop();
+
+                if (current == goal)
                 {
-                    edge.To.Visited = true;
-                    edge.To.Parent = edge.From;
-                }
-                if (edge.To == goal)
-                {
-                    return edge.To;
+                    return current;
                 }
 
-                foreach (Edge<T> e in edge.To.Edges)
+                foreach (Edge<T> e in graphEdges)
                 {
-                    if (!e.To.Visited)
+                    Node<T> neighbor = null;
+
+                    if (e.From == current && !e.To.Visited)
                     {
-                        edges.Push(e);
+                        neighbor = e.To;
+                    }
+                    else if (e.To == current && !e.From.Visited)
+                    {
+                        neighbor = e.From;
+                    }
+                    if (neighbor != null)
+                    {
+                        neighbor.Visited = true;
+                        neighbor.Parent = current;
+                        stack.Push(neighbor);
                     }
                 }
             }

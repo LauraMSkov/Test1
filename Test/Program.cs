@@ -85,7 +85,7 @@ namespace Test
             }
 
             //Vi kalder nu vores DFS
-            Node<string> n = Graph<string>.DFS<string>(startNode, endNode);
+            Node<string> n = Graph<string>.DFS<string>(startNode, endNode, graph.Edges);
 
             //Vi looper nu path ud
             Console.WriteLine("DFS vej fra Entrance til Water Ride");
