@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Test
 {
@@ -24,8 +29,39 @@ namespace Test
 
             Graph<string> graph = new Graph<string>();
 
+            string startPath = AppContext.BaseDirectory;
+            string fileNr = Console.ReadLine();
+            if (fileNr == "1")
+            {
+                startPath = Path.Combine(startPath, @"JSON files\sorted.json");
+            }
+            else if (fileNr == "2")
+            {
+                startPath = Path.Combine(startPath, @"JSON files\reverseSorted.json");
+            }
+            else if (fileNr == "3")
+            {
+                startPath = Path.Combine(startPath, @"JSON files\notSorted.json");
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter 1, 2, or 3.");
+                return;
+            }
+
+            string JsonString = File.ReadAllText(startPath);
+            var Jsondata = JsonSerializer.Deserialize<NumbersData>(JsonString);
+            int[] values = (Jsondata != null && Jsondata.Values != null) ? Jsondata.Values : Array.Empty<int>();
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                Console.WriteLine(values[i]);
+            }
+            Console.ReadKey();
+
+
             //Tilføjer nodes
-            graph.AddNode("Entrance");
+            /*graph.AddNode("Entrance");
             graph.AddNode("Carousel");
             graph.AddNode("Mini Train");
             graph.AddNode("Ice Cream");
@@ -71,7 +107,7 @@ namespace Test
                 Console.WriteLine(pathNode.Data);
             }
 
-            
+
         }
 
         private static List<Node<T>> TrackPath<T>(Node<T> node, Node<T> start)
@@ -86,11 +122,12 @@ namespace Test
 
             path.Add(start);
             path.Reverse();
-            return path;
+            return path;*/
+        }
+        public class NumbersData
+        {
+            [JsonPropertyName("values")]
+            public int[] Values { get; set; } = Array.Empty<int>();
         }
     }
-
-
-
-
 }
