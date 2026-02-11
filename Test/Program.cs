@@ -7,7 +7,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-
+using System.Runtime.CompilerServices;
+    [assembly: InternalsVisibleTo("UnitTestTest")]
 namespace Test
 {
     internal class Program
@@ -84,15 +85,15 @@ namespace Test
             string startPath = AppContext.BaseDirectory; ;
             if (a == 1)
             {
-                startPath = Path.Combine(startPath, @"JSON files\sorted.json");
+                startPath = Path.Combine(startPath, @"JSONfiles\sorted.json");
             }
             else if (a == 2)
             {
-                startPath = Path.Combine(startPath, @"JSON files\reverseSorted.json");
+                startPath = Path.Combine(startPath, @"JSONfiles\reverseSorted.json");
             }
             else if (a == 3)
             {
-                startPath = Path.Combine(startPath, @"JSON files\notSorted.json");
+                startPath = Path.Combine(startPath, @"JSONfiles\notSorted.json");
             }
 
             string JsonString = File.ReadAllText(startPath);
@@ -123,7 +124,7 @@ namespace Test
                 throw new ArgumentException("Invalid value for 'a'");
             }
 
-            string fullPath = Path.Combine(basePath, "JSON files", fileName);
+            string fullPath = Path.Combine(basePath, "JSONfiles", fileName);
 
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
