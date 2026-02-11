@@ -37,20 +37,44 @@ namespace Test
 
             //Tilføjer node til graf
             graph.AddNode("Entrance");
+            graph.AddNode("Carousel");
             graph.AddNode("Mini Train");
+            graph.AddNode("Ice Cream");
+            graph.AddNode("Roller Coaster");
+            graph.AddNode("Haunted House");
             graph.AddNode("Water Ride");
+            graph.AddNode("Pirate Ship");
+            graph.AddNode("Climbing Tower");
+            graph.AddNode("Volcano Ride");
 
             //Kreere edges
+            graph.AddEdge("Entrance", "Carousel");
             graph.AddEdge("Entrance", "Mini Train");
+            graph.AddEdge("Entrance", "Ice Cream");
+            graph.AddEdge("Carousel", "Roller Coaster");
+            graph.AddEdge("Carousel", "Haunted House");
             graph.AddEdge("Mini Train", "Water Ride");
+            graph.AddEdge("Ice Cream", "Pirate Ship");
+            graph.AddEdge("Roller Coaster", "Climbing Tower");
+            graph.AddEdge("Climbing Tower", "Volcano Ride");
 
             Node<string> startNode = graph.GetNode("Entrance");
             Node<string> goalNode = graph.GetNode("Water Ride");
+            Node<string> goalNode1 = graph.GetNode("Volcano Ride");
 
-            //Vi kalder nu vores DFS
-            Node<string> result = Graph<string>.DFS(startNode, goalNode);
-            Console.WriteLine("DFS vej fra Entrance til Water Ride");
-            Graph<string>.PrintPath(result);
+            //Vi kalder nu vores DFS, vej fra Entrance til Water Ride
+            Node<string> resultDFS = Graph<string>.DFS(startNode, goalNode);
+            Console.WriteLine("\nDFS vej fra Entrance til Water Ride");
+            Graph<string>.PrintPath(resultDFS);
+
+            Node<string> resultDFS1 = Graph<string>.DFS(startNode, goalNode1);
+            Console.WriteLine("\nDFS vej fra Entrance til Volcano Ride");
+            Graph<string>.PrintPath(resultDFS1);
+
+            //BFS
+            //Node<string> resultBFS = Graph<string>.BFS(startNode, goalNode);
+            //Console.WriteLine("BFS vej fra Entrance til Water Ride");
+            //Graph<string>.PrintPath(resultBFS);
 
         }
         public static List<int> LoadJson(int a)

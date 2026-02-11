@@ -48,7 +48,7 @@ namespace Test
                 return null;
             }
         }
-    
+
         public static Node<T> DFS(Node<T> start, Node<T> goal)
         {
             Stack<Node<T>> stack = new Stack<Node<T>>();
@@ -69,7 +69,7 @@ namespace Test
 
                 if (current == goal)
                 {
-                    Console.WriteLine($"Visited");
+                    Console.WriteLine($"\nVisited DFS");
                     foreach (Node<T> v in visited)
                     {
                         Console.WriteLine($"{v.Data}");
@@ -83,6 +83,44 @@ namespace Test
                     if (!visited.Contains(e.To))
                     {
                         stack.Push(e.To);
+                        e.To.Parent = current;
+                    }
+                }
+            }
+
+
+            return null;
+
+        }
+
+        public static Node<T> BFS(Node<T> start, Node<T> goal)
+        {
+            Queue<Node<T>> queue = new Queue<Node<T>>();
+            HashSet<Node<T>> visited = new HashSet<Node<T>>();
+            queue.Enqueue(start);
+            //start.Parent = start;
+            visited.Add(start);
+
+            while (queue.Count > 0)
+            {
+                //Stacken laver en liste over noderne
+                Node<T> current = queue.Dequeue();
+                if (current == goal)
+                {
+                    Console.WriteLine($"\nVisited BFS");
+                    foreach (Node<T> v in visited)
+                    {
+                        Console.WriteLine($"{v.Data}");
+                    }
+                    return current;
+                }
+
+                foreach (Edge<T> e in current.Edges)
+                {
+                    if (!visited.Contains(e.To))
+                    {
+                        visited.Add(e.To);
+                        queue.Enqueue(e.To);
                         e.To.Parent = current;
                     }
                 }
