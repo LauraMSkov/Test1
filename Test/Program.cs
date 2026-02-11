@@ -24,6 +24,8 @@ namespace Test
             List<int> sorted = MyList<int>.QuickSort(list, Comparer<int>.Default, ref comparisonQuick);
             Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
 
+            //Delopgave 2
+            Console.WriteLine("Delopgave 2");
             Graph<string> graph = new Graph<string>();
 
             //Tilføjer nodes
@@ -36,13 +38,12 @@ namespace Test
             graph.Nodes.Add(miniTrain);
             graph.Nodes.Add(waterRide);
 
+            //Kreere edges
             graph.Edges.Add(new Edge<string>(entrance, miniTrain));
             graph.Edges.Add(new Edge<string>(miniTrain, waterRide));
 
-            //Vi laver først variabler som holder noderne vil leder efter
+            //Vi laver først variable som holder startnoden og finder den gennem et foreach loop
             Node<string> startNode = null;
-
-            //Vi finder nu start noden gennem et foreach loop
             foreach (Node<string> node in graph.Nodes)
             {
                 if (node.Data == "Entrance")
@@ -52,7 +53,7 @@ namespace Test
                 }
             }
 
-            //Vi finder nu slut noden gennem et foreach loop
+            //Vi laver en variable som holder slutnoden og finder den gennem et foreach loop
             Node<string> goalNode = null;
             foreach (Node<string> node in graph.Nodes)
             {
@@ -65,7 +66,6 @@ namespace Test
 
             //Vi kalder nu vores DFS
             Node<string> result = Graph<string>.DFS<string>(startNode, goalNode, graph.Edges);
-
             Console.WriteLine("DFS vej fra Entrance til Water Ride");
             Graph<string>.PrintPath(result);
 
