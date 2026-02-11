@@ -14,21 +14,20 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            
-            //List<int> notSortedList = LoadJson(3);
-            //List<int> sortedList = LoadJson(1);
-            List<int> sortedList = new List<int> {1, 2, 3 , 4, 5};
-            Console.WriteLine("Original list: " + string.Join(", ", sortedList));
-
+            List<int> sortedList = LoadJson(1);
+            List<int> reverseSortedList = LoadJson(2);
+            List<int> notSortedList = LoadJson(3);
 
             int comparisonCount = 0;
-            MyList<int>.InsertSort(sortedList, Comparer<int>.Default, ref comparisonCount);
+            MyList<int>.InsertSort(notSortedList, Comparer<int>.Default, ref comparisonCount);
             Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
 
             int comparisonQuick = 0;
-            List<int> sorted = MyList<int>.QuickSort(sortedList, Comparer<int>.Default, ref comparisonQuick);
+            List<int> sorted = MyList<int>.QuickSort(notSortedList, Comparer<int>.Default, ref comparisonQuick);
             Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
             Console.WriteLine("Sorted list: " + string.Join(", ", sorted));
+
+            WriteJson(sorted, 1);
 
             Console.ReadKey();
 
@@ -103,22 +102,37 @@ namespace Test
             return values;
         }
 
-        public void WriteJson(int[] values, int a)
+        public static void WriteJson(List<int> values, int a)
         {
-            string startPath = AppContext.BaseDirectory; ;
+            string basePath = AppContext.BaseDirectory;
+            string fileName;
             if (a == 1)
             {
-                startPath = Path.Combine(startPath, @"JSON files\postSorted.json");
+                fileName = "postSorted.json";
             }
             else if (a == 2)
             {
-                startPath = Path.Combine(startPath, @"JSON files\postReverseSorted.json");
+                fileName = "postReverseSorted.json";
             }
             else if (a == 3)
             {
-                startPath = Path.Combine(startPath, @"JSON files\postNotSorted.json");
+                fileName = "postNotSorted.json";
             }
-            File.WriteAllText(startPath, values.ToString());
+            else
+            {
+                throw new ArgumentException("Invalid value for 'a'");
+            }
+
+            string fullPath = Path.Combine(basePath, "JSON files", fileName);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+
+            string jsonString = JsonSerializer.Serialize(
+                new { Values = values },
+                new JsonSerializerOptions { WriteIndented = true }
+            );
+
+            File.WriteAllText(fullPath, jsonString);
         }
         public class NumbersData
         {

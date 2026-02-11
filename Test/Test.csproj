@@ -87,7 +87,9 @@
     </None>
     <None Include="JSON files\postNotSorted.json" />
     <None Include="JSON files\postReverseSorted.json" />
-    <None Include="JSON files\postSorted.json" />
+    <None Include="JSON files\postSorted.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="JSON files\reverseSorted.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
