@@ -14,15 +14,23 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            List<int> list = new List<int>();
+            
+            //List<int> notSortedList = LoadJson(3);
+            //List<int> sortedList = LoadJson(1);
+            List<int> sortedList = new List<int> {1, 2, 3 , 4, 5};
+            Console.WriteLine("Original list: " + string.Join(", ", sortedList));
+
 
             int comparisonCount = 0;
-            MyList<int>.InsertSort(list, Comparer<int>.Default, ref comparisonCount);
+            MyList<int>.InsertSort(sortedList, Comparer<int>.Default, ref comparisonCount);
             Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
 
             int comparisonQuick = 0;
-            List<int> sorted = MyList<int>.QuickSort(list, Comparer<int>.Default, ref comparisonQuick);
+            List<int> sorted = MyList<int>.QuickSort(sortedList, Comparer<int>.Default, ref comparisonQuick);
             Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
+            Console.WriteLine("Sorted list: " + string.Join(", ", sorted));
+
+            Console.ReadKey();
 
             //Delopgave 2
             Console.WriteLine("Delopgave 2");
@@ -72,7 +80,7 @@ namespace Test
 
 
         }
-        public int[] LoadJson(int a)
+        public static List<int> LoadJson(int a)
         {
             string startPath = AppContext.BaseDirectory; ;
             if (a == 1)
@@ -90,7 +98,8 @@ namespace Test
 
             string JsonString = File.ReadAllText(startPath);
             var Jsondata = JsonSerializer.Deserialize<NumbersData>(JsonString);
-            int[] values = (Jsondata != null && Jsondata.Values != null) ? Jsondata.Values : Array.Empty<int>();
+            int[] nums = (Jsondata != null && Jsondata.Values != null) ? Jsondata.Values : Array.Empty<int>();
+            List<int> values = new List<int>(nums);
             return values;
         }
 

@@ -31,12 +31,13 @@ namespace Test
                 return a;
             }
 
+            //T pivot = a[a.Count / 2];
             T pivot = a[0];
 
             List<T> before = new List<T>();
             List<T> after = new List<T>();
 
-            for (int i = 1; i < a.Count; i++)
+            for (int i = 0; i < a.Count; i++)
             {
                 comparisonQuick++;
 
