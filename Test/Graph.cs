@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,91 +10,84 @@ namespace Test
 {
     internal class Graph<T>
     {
-        public List<Node<T>> Nodes { get; private set; } = new List<Node<T>>();
+
+        public Dictionary<T, Node<T>> Nodes { get; private set; } = new Dictionary<T, Node<T>>();
         public List<Edge<T>> Edges { get; private set; } = new List<Edge<T>>();
 
-        /*public void AddNode(T node)
+        public void AddNode(T value)
         {
-            Nodes.Add(new Node<T>(node));
+            if (!Nodes.ContainsKey(value))
+            {
+                Nodes[value] = new Node<T>(value);
+            }
+            
         }
 
         public void AddEdge(T from, T to)
         {
-            Node<T> fromNode = null;
-            Node<T> toNode = null;
+            DirEdge(from, to);
+            DirEdge(to, from);
+        }
 
-            //Finder from noden
-            foreach (Node<T> node in Nodes)
+        public void DirEdge(T from, T to)
+        {
+            if(Nodes.ContainsKey(from) && Nodes.ContainsKey(to))
             {
-                //Man kn risikere at node.Data kan være null, og for at håndtere det sikret skrives kode på understående måde
-                if (Equals(node.Data, from))
-                {
-                    fromNode = node;
-                    break;
-                }
+                Nodes[from].AddEdge(Nodes[to]);
             }
+        }
 
-            //Finder to noden
-            foreach(Node<T> node in Nodes)
+        public Node<T> GetNode(T value)
+        {
+            if (Nodes.ContainsKey(value))
             {
-                if (Equals(node.Data, to))
-                {
-                    toNode = node;
-                    break;
-                }
-            }
-
-            if (fromNode !=null && toNode !=null)
-            {
-                fromNode.AddEdge(toNode);
-                toNode.AddEdge(fromNode);
+                return Nodes[value];
             }
             else
             {
-                Console.WriteLine("Node ikke fundet");
-            }
-        }*/
-
-        public static Node<T> DFS<T>(Node<T> start, Node<T> goal, List<Edge<T>> graphEdges)
-        {
-            if (start == null || goal == null)
-            {
                 return null;
             }
-            
+        }
+    
+        public static Node<T> DFS(Node<T> start, Node<T> goal)
+        {
             Stack<Node<T>> stack = new Stack<Node<T>>();
+            HashSet<Node<T>> visited = new HashSet<Node<T>>();
             stack.Push(start);
-            start.Visited = true;
+            //start.Parent = start;
 
             while (stack.Count > 0)
             {
+                //Stacken laver en liste over noderne
                 Node<T> current = stack.Pop();
+                if (visited.Contains(current))
+                {
+                    continue;
+                }
+
+                visited.Add(current);
 
                 if (current == goal)
                 {
+                    Console.WriteLine($"Visited");
+                    foreach (Node<T> v in visited)
+                    {
+                        Console.WriteLine($"{v.Data}");
+                    }
                     return current;
                 }
 
-                foreach (Edge<T> e in graphEdges)
-                {
-                    Node<T> neighbor = null;
 
-                    if (e.From == current && !e.To.Visited)
+                foreach (Edge<T> e in current.Edges)
+                {
+                    if (!visited.Contains(e.To))
                     {
-                        neighbor = e.To;
-                    }
-                    else if (e.To == current && !e.From.Visited)
-                    {
-                        neighbor = e.From;
-                    }
-                    if (neighbor != null)
-                    {
-                        neighbor.Visited = true;
-                        neighbor.Parent = current;
-                        stack.Push(neighbor);
+                        stack.Push(e.To);
+                        e.To.Parent = current;
                     }
                 }
             }
+
 
             return null;
         }
@@ -101,24 +95,24 @@ namespace Test
         public static void PrintPath(Node<T> goalNode)
         {
            
-            List<T> path = new List<T>();
+            List<Node<T>> path = new List<Node<T>>();
             Node<T> current = goalNode;
-
-            while(current != null)
-            {
-                path.Add(current.Data);
-                current = current.Parent;
-            }
-
+            
             if (goalNode == null)
             {
                 Console.WriteLine("Path ikke fundet");
                 return;
             }
 
+            while(current != null)
+            {
+                path.Add(current);
+                current = current.Parent;
+            }
+
             for (int i = path.Count - 1; i >= 0; i--)
             {
-                Console.WriteLine(path[i]);
+                Console.WriteLine(path[i].Data);
             }
 
 

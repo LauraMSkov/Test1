@@ -35,48 +35,22 @@ namespace Test
             Console.WriteLine("Delopgave 2");
             Graph<string> graph = new Graph<string>();
 
-            //Tilføjer nodes
-            Node<string> entrance = new Node<string>("Entrance");
-            Node<string> miniTrain = new Node<string>("Mini Train");
-            Node<string> waterRide = new Node<string>("Water Ride");
-
             //Tilføjer node til graf
-            graph.Nodes.Add(entrance);
-            graph.Nodes.Add(miniTrain);
-            graph.Nodes.Add(waterRide);
+            graph.AddNode("Entrance");
+            graph.AddNode("Mini Train");
+            graph.AddNode("Water Ride");
 
             //Kreere edges
-            graph.Edges.Add(new Edge<string>(entrance, miniTrain));
-            graph.Edges.Add(new Edge<string>(miniTrain, waterRide));
+            graph.AddEdge("Entrance", "Mini Train");
+            graph.AddEdge("Mini Train", "Water Ride");
 
-            //Vi laver først variable som holder startnoden og finder den gennem et foreach loop
-            Node<string> startNode = null;
-            foreach (Node<string> node in graph.Nodes)
-            {
-                if (node.Data == "Entrance")
-                {
-                    startNode = node;
-                    break;
-                }
-            }
-
-            //Vi laver en variable som holder slutnoden og finder den gennem et foreach loop
-            Node<string> goalNode = null;
-            foreach (Node<string> node in graph.Nodes)
-            {
-                if (node.Data == "Water Ride")
-                {
-                    goalNode = node;
-                    break;
-                }
-            }
+            Node<string> startNode = graph.GetNode("Entrance");
+            Node<string> goalNode = graph.GetNode("Water Ride");
 
             //Vi kalder nu vores DFS
-            Node<string> result = Graph<string>.DFS<string>(startNode, goalNode, graph.Edges);
+            Node<string> result = Graph<string>.DFS(startNode, goalNode);
             Console.WriteLine("DFS vej fra Entrance til Water Ride");
             Graph<string>.PrintPath(result);
-
-
 
         }
         public static List<int> LoadJson(int a)
