@@ -1,30 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+[assembly: InternalsVisibleTo("UnitTestTest")]
 
 namespace Test
 {
     internal class MyList<T>
     {
-
-        public static void AddToList(T a, List<T> b)
+        T[] items;
+        private int index = 0;
+        public int Count{ get{ return index; } }
+        public MyList(int cap = 4) 
         {
-            b.Add((T)Convert.ChangeType(a, typeof(T)));
+            this.items = new T[cap];
+        }
+        public void Add(T item)
+        {
+            if (index+1 > items.Length)
+            {
+                Resize();
+                items[index] = item;
+                index++;
+            }
+        }
+        private void Resize()
+        {
+            T[] newArr = new T[items.Length * 2];
+            Array.Copy(items, newArr, items.Length);
+            items = newArr;
         }
 
-        public static T FindInList(int a, List<T> b)
-        {
-            return b[a];
-        }
+        public T this[int i]{ get { return items[i]; } set { items[i] = value; } }
 
-        public static int ListLength(List<T> a)
+        public void QuickSort(IComparer<T> comparer, ref int comparisonQuick)
         {
-            return a.Count;
+            QuickSort(this, comparer, ref comparisonQuick);
         }
-
-        public static List<T> QuickSort(List<T> a, IComparer<T> comparer, ref int comparisonQuick)
+        private MyList<T> QuickSort(MyList<T> a, IComparer<T> comparer, ref int comparisonQuick)
         {
             if (a.Count <= 1)
             {
@@ -33,8 +48,8 @@ namespace Test
 
             T pivot = a[0];
 
-            List<T> before = new List<T>();
-            List<T> after = new List<T>();
+            MyList<T> before = new MyList<T>();
+            MyList<T> after = new MyList<T>();
 
             for (int i = 1; i < a.Count; i++)
             {
@@ -50,27 +65,35 @@ namespace Test
                 }
             }
 
-            List<T> result = new List<T>();
-            result.AddRange(QuickSort(before, comparer, ref comparisonQuick));
+            MyList<T> result = new MyList<T>();
+            MyList<T> sortedBefore = QuickSort(before, comparer, ref comparisonQuick);
+            MyList<T> sortedAfter = QuickSort(after, comparer, ref comparisonQuick);
+            for (int i = 0; i < sortedBefore.Count; i++)
+            {
+                result.Add(sortedBefore[i]);
+            }
             result.Add(pivot);
-            result.AddRange(QuickSort(after, comparer, ref comparisonQuick));
+            for (int i = 0; i < sortedAfter.Count; i++)
+            {
+                result.Add(sortedAfter[i]);
+            }
             return result;
         }
 
-        public static void InsertSort(List<T> b, IComparer<T> comparer, ref int comparisonCount)
+        public void InsertSort(IComparer<T> comparer, ref int comparisonCount)
         {
-            for (int i = 1; i < b.Count; i++)
+            for (int i = 1; i < this.Count; i++)
             {
-                T val = b[i];
+                T val = this[i];
                 int pointer = i;
 
                 //Kode gøre  længere så man sikre sig at tælle sammenligningen korrekt med Count
                 while (pointer > 0)
                 {
                     comparisonCount++;
-                    if (comparer.Compare(b[pointer - 1], val) > 0)
+                    if (comparer.Compare(this[pointer - 1], val) > 0)
                     {
-                        b[pointer] = b[pointer - 1];
+                        this[pointer] = this[pointer - 1];
                         pointer--;
                     }
                     else
@@ -79,7 +102,7 @@ namespace Test
                     }
                 }
 
-                b[pointer] = val;
+                this[pointer] = val;
             }
         }
     }

@@ -82,18 +82,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="JSON files\notSorted.json">
+    <None Include="JSONfiles\notSorted.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="JSON files\postNotSorted.json" />
-    <None Include="JSON files\postReverseSorted.json" />
-    <None Include="JSON files\postSorted.json">
+    <None Include="JSONfiles\postNotSorted.json" />
+    <None Include="JSONfiles\postReverseSorted.json" />
+    <None Include="JSONfiles\postSorted.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="JSON files\reverseSorted.json">
+    <None Include="JSONfiles\reverseSorted.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="JSON files\sorted.json">
+    <None Include="JSONfiles\sorted.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

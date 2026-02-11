@@ -7,7 +7,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-
+using System.Runtime.CompilerServices;
+    [assembly: InternalsVisibleTo("UnitTestTest")]
 namespace Test
 {
     internal class Program
@@ -18,12 +19,28 @@ namespace Test
             List<int> reverseSortedList = LoadJson(2);
             List<int> notSortedList = LoadJson(3);
 
+            MyList<int> myListSorted = new MyList<int>();
+            for (int i = 0; i < sortedList.Count; i++)
+            {
+                myListSorted.Add(sortedList[i]);
+            }
+            MyList<int> myListReverseSorted = new MyList<int>();
+            for (int i = 0; i < reverseSortedList.Count; i++)
+            {
+                myListReverseSorted.Add(reverseSortedList[i]);
+            }
+            MyList<int> myListNotSorted = new MyList<int>();
+            for (int i = 0; i < notSortedList.Count; i++)
+            {
+                myListNotSorted.Add(notSortedList[i]);
+            }
+
             int comparisonCount = 0;
-            MyList<int>.InsertSort(notSortedList, Comparer<int>.Default, ref comparisonCount);
+            myListNotSorted.InsertSort(Comparer<int>.Default, ref comparisonCount);
             Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
 
             int comparisonQuick = 0;
-            List<int> sorted = MyList<int>.QuickSort(notSortedList, Comparer<int>.Default, ref comparisonQuick);
+            myListNotSorted.QuickSort(Comparer<int>.Default, ref comparisonQuick);
             Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
             Console.WriteLine("Sorted list: " + string.Join(", ", sorted));
 
@@ -82,15 +99,15 @@ namespace Test
             string startPath = AppContext.BaseDirectory; ;
             if (a == 1)
             {
-                startPath = Path.Combine(startPath, @"JSON files\sorted.json");
+                startPath = Path.Combine(startPath, @"JSONfiles\sorted.json");
             }
             else if (a == 2)
             {
-                startPath = Path.Combine(startPath, @"JSON files\reverseSorted.json");
+                startPath = Path.Combine(startPath, @"JSONfiles\reverseSorted.json");
             }
             else if (a == 3)
             {
-                startPath = Path.Combine(startPath, @"JSON files\notSorted.json");
+                startPath = Path.Combine(startPath, @"JSONfiles\notSorted.json");
             }
 
             string JsonString = File.ReadAllText(startPath);
@@ -121,7 +138,7 @@ namespace Test
                 throw new ArgumentException("Invalid value for 'a'");
             }
 
-            string fullPath = Path.Combine(basePath, "JSON files", fileName);
+            string fullPath = Path.Combine(basePath, "JSONfiles", fileName);
 
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
