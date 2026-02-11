@@ -19,12 +19,28 @@ namespace Test
             List<int> reverseSortedList = LoadJson(2);
             List<int> notSortedList = LoadJson(3);
 
+            MyList<int> myListSorted = new MyList<int>();
+            for (int i = 0; i < sortedList.Count; i++)
+            {
+                myListSorted.Add(sortedList[i]);
+            }
+            MyList<int> myListReverseSorted = new MyList<int>();
+            for (int i = 0; i < reverseSortedList.Count; i++)
+            {
+                myListReverseSorted.Add(reverseSortedList[i]);
+            }
+            MyList<int> myListNotSorted = new MyList<int>();
+            for (int i = 0; i < notSortedList.Count; i++)
+            {
+                myListNotSorted.Add(notSortedList[i]);
+            }
+
             int comparisonCount = 0;
-            MyList<int>.InsertSort(notSortedList, Comparer<int>.Default, ref comparisonCount);
+            myListNotSorted.InsertSort(Comparer<int>.Default, ref comparisonCount);
             Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
 
             int comparisonQuick = 0;
-            List<int> sorted = MyList<int>.QuickSort(notSortedList, Comparer<int>.Default, ref comparisonQuick);
+            myListNotSorted.QuickSort(Comparer<int>.Default, ref comparisonQuick);
             Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
             Console.WriteLine("Sorted list: " + string.Join(", ", sorted));
 
