@@ -10,6 +10,7 @@ namespace Test
 {
     internal class MyList<T>
     {
+        //Properties for klassen MyList
         T[] items;
         private int index = 0;
         public int Count{ get{ return index; } }
@@ -17,6 +18,11 @@ namespace Test
         {
             this.items = new T[cap];
         }
+
+        /// <summary>
+        /// Tilføjer item til listen
+        /// </summary>
+        /// <param name="item"></param>
         public void Add(T item)
         {
             if (index+1 > items.Length)
@@ -26,6 +32,10 @@ namespace Test
                 index++;
             }
         }
+
+        /// <summary>
+        /// Resize array størrelsen
+        /// </summary>
         private void Resize()
         {
             T[] newArr = new T[items.Length * 2];
@@ -39,6 +49,14 @@ namespace Test
         {
             QuickSort(this, comparer, ref comparisonQuick);
         }
+
+        /// <summary>
+        /// Opdeler listen i to, sorterer dem og sætter dem sammen
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="comparer"></param>
+        /// <param name="comparisonQuick"></param>
+        /// <returns></returns>
         private MyList<T> QuickSort(MyList<T> a, IComparer<T> comparer, ref int comparisonQuick)
         {
             if (a.Count <= 1)
@@ -80,6 +98,11 @@ namespace Test
             return result;
         }
 
+        /// <summary>
+        /// Gennemgår en liste, et element af gangen og sorterer listen
+        /// </summary>
+        /// <param name="comparer"></param>
+        /// <param name="comparisonCount"></param>
         public void InsertSort(IComparer<T> comparer, ref int comparisonCount)
         {
             for (int i = 1; i < this.Count; i++)

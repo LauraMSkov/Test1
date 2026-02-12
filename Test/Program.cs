@@ -15,6 +15,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
+            //Delopgave 1
             List<int> sortedList = LoadJson(1);
             List<int> reverseSortedList = LoadJson(2);
             List<int> notSortedList = LoadJson(3);
@@ -42,11 +43,9 @@ namespace Test
             int comparisonQuick = 0;
             myListNotSorted.QuickSort(Comparer<int>.Default, ref comparisonQuick);
             Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
-            Console.WriteLine("Sorted list: " + string.Join(", ", sorted));
+            //Console.WriteLine("Sorted list: " + string.Join(", ", sorted));
 
-            WriteJson(sorted, 1);
-
-            Console.ReadKey();
+            //WriteJson(sorted, 1);
 
             //Delopgave 2
             Console.WriteLine("Delopgave 2");
@@ -75,6 +74,7 @@ namespace Test
             graph.AddEdge("Roller Coaster", "Climbing Tower");
             graph.AddEdge("Climbing Tower", "Volcano Ride");
 
+            //Sætter variablerne af hvor roden er og noden man skal finde hen til
             Node<string> startNode = graph.GetNode("Entrance");
             Node<string> goalNode = graph.GetNode("Water Ride");
             Node<string> goalNode1 = graph.GetNode("Volcano Ride");
@@ -84,14 +84,20 @@ namespace Test
             Console.WriteLine("\nDFS vej fra Entrance til Water Ride");
             Graph<string>.PrintPath(resultDFS);
 
+            //DFS, vej fra Entrance til Volcano Ride
             Node<string> resultDFS1 = Graph<string>.DFS(startNode, goalNode1);
             Console.WriteLine("\nDFS vej fra Entrance til Volcano Ride");
             Graph<string>.PrintPath(resultDFS1);
 
-            //BFS
-            //Node<string> resultBFS = Graph<string>.BFS(startNode, goalNode);
-            //Console.WriteLine("BFS vej fra Entrance til Water Ride");
-            //Graph<string>.PrintPath(resultBFS);
+            //BFS, vej fra Entrance til Water Ride
+            Node<string> resultBFS = Graph<string>.BFS(startNode, goalNode);
+            Console.WriteLine("BFS vej fra Entrance til Water Ride");
+            Graph<string>.PrintPath(resultBFS);
+
+            //BFS, vej fra Entrance til Water Ride
+            Node<string> resultBFS1 = Graph<string>.BFS(startNode, goalNode1);
+            Console.WriteLine("BFS vej fra Entrance til Volcano Ride");
+            Graph<string>.PrintPath(resultBFS1);
 
         }
         public static List<int> LoadJson(int a)

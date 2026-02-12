@@ -10,10 +10,14 @@ namespace Test
 {
     internal class Graph<T>
     {
-
+        //Properties for Graph klassen
         public Dictionary<T, Node<T>> Nodes { get; private set; } = new Dictionary<T, Node<T>>();
         public List<Edge<T>> Edges { get; private set; } = new List<Edge<T>>();
 
+        /// <summary>
+        /// Tilføjer en node
+        /// </summary>
+        /// <param name="value"></param>
         public void AddNode(T value)
         {
             if (!Nodes.ContainsKey(value))
@@ -23,13 +27,18 @@ namespace Test
             
         }
 
+        /// <summary>
+        /// Tilføjer en kant
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         public void AddEdge(T from, T to)
         {
-            DirEdge(from, to);
-            DirEdge(to, from);
+            DirectEdge(from, to);
+            DirectEdge(to, from);
         }
 
-        public void DirEdge(T from, T to)
+        public void DirectEdge(T from, T to)
         {
             if(Nodes.ContainsKey(from) && Nodes.ContainsKey(to))
             {
@@ -37,6 +46,11 @@ namespace Test
             }
         }
 
+        /// <summary>
+        /// For ft i noden
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public Node<T> GetNode(T value)
         {
             if (Nodes.ContainsKey(value))
@@ -49,6 +63,12 @@ namespace Test
             }
         }
 
+        /// <summary>
+        /// Undersøger grafen i dybden
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="goal"></param>
+        /// <returns></returns>
         public static Node<T> DFS(Node<T> start, Node<T> goal)
         {
             Stack<Node<T>> stack = new Stack<Node<T>>();
@@ -88,11 +108,15 @@ namespace Test
                 }
             }
 
-
             return null;
-
         }
 
+        /// <summary>
+        /// Undersøger grafen i bredden
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="goal"></param>
+        /// <returns></returns>
         public static Node<T> BFS(Node<T> start, Node<T> goal)
         {
             Queue<Node<T>> queue = new Queue<Node<T>>();

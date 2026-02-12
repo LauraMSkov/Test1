@@ -8,6 +8,7 @@ namespace Test
 {
     internal class Edge<T>
     {
+        //Properties for klassen Edge
         public Node<T> From { get; private set; }
         public Node<T> To { get; private set; }
 
