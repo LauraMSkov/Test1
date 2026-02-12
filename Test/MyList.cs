@@ -17,8 +17,8 @@ namespace Test
         //Metode til at få længden af listen
         public int Count{ get{ return index; } }
 
-        //Sætter listens længde til 4 som default
-        public MyList(int cap = 4) 
+        //Sætter listens længde til 1 som default
+        public MyList(int cap = 1) 
         {
             this.items = new T[cap];
         }
@@ -32,9 +32,9 @@ namespace Test
             if (index+1 > items.Length)
             {
                 Resize();
+            }
                 items[index] = item;
                 index++;
-            }
         }
 
         /// <summary>
