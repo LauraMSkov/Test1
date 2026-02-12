@@ -13,7 +13,11 @@ namespace Test
         //Properties for klassen MyList
         T[] items;
         private int index = 0;
+
+        //Metode til at få længden af listen
         public int Count{ get{ return index; } }
+
+        //Sætter listens længde til 4 som default
         public MyList(int cap = 4) 
         {
             this.items = new T[cap];
@@ -43,6 +47,7 @@ namespace Test
             items = newArr;
         }
 
+        //Metode til at få og sætte i listens indekser
         public T this[int i]{ get { return items[i]; } set { items[i] = value; } }
 
         public void QuickSort(IComparer<T> comparer, ref int comparisonQuick)

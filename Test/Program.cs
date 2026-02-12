@@ -16,33 +16,74 @@ namespace Test
         static void Main(string[] args)
         {
             //Delopgave 1
+
+            //Lister af vores json filer
             List<int> sortedList = LoadJson(1);
             List<int> reverseSortedList = LoadJson(2);
             List<int> notSortedList = LoadJson(3);
 
-            MyList<int> myListSorted = new MyList<int>();
+            //Opretter MyLists og giver dem indholdet af de forrige Lists
+            MyList<int> myListSortedInsert = new MyList<int>();
             for (int i = 0; i < sortedList.Count; i++)
             {
-                myListSorted.Add(sortedList[i]);
+                myListSortedInsert.Add(sortedList[i]);
             }
-            MyList<int> myListReverseSorted = new MyList<int>();
+            MyList<int> myListReverseSortedInsert = new MyList<int>();
             for (int i = 0; i < reverseSortedList.Count; i++)
             {
-                myListReverseSorted.Add(reverseSortedList[i]);
+                myListReverseSortedInsert.Add(reverseSortedList[i]);
             }
-            MyList<int> myListNotSorted = new MyList<int>();
+            MyList<int> myListNotSortedInsert = new MyList<int>();
             for (int i = 0; i < notSortedList.Count; i++)
             {
-                myListNotSorted.Add(notSortedList[i]);
+                myListNotSortedInsert.Add(notSortedList[i]);
             }
 
+            //Kører InsertSort på MyList og udskriver antal sammenligninger
             int comparisonCount = 0;
-            myListNotSorted.InsertSort(Comparer<int>.Default, ref comparisonCount);
+            myListSortedInsert.InsertSort(Comparer<int>.Default, ref comparisonCount);
             Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
 
+            comparisonCount = 0;
+            myListReverseSortedInsert.InsertSort(Comparer<int>.Default, ref comparisonCount);
+            Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
+
+            comparisonCount = 0;
+            myListNotSortedInsert.InsertSort(Comparer<int>.Default, ref comparisonCount);
+            Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
+
+            //Laver nye MyLists til QuickSort
+            MyList<int> myListSortedQuick = new MyList<int>();
+            for (int i = 0; i < sortedList.Count; i++)
+            {
+                myListSortedQuick.Add(sortedList[i]);
+            }
+            MyList<int> myListReverseSortedQuick = new MyList<int>();
+            for (int i = 0; i < reverseSortedList.Count; i++)
+            {
+                myListReverseSortedQuick.Add(reverseSortedList[i]);
+            }
+            MyList<int> myListNotSortedQuick = new MyList<int>();
+            for (int i = 0; i < notSortedList.Count; i++)
+            {
+                myListNotSortedQuick.Add(notSortedList[i]);
+            }
+
+            //Kører Quicksort på MyListerne og udskriver antal sammenligninger
             int comparisonQuick = 0;
-            myListNotSorted.QuickSort(Comparer<int>.Default, ref comparisonQuick);
+            myListSortedInsert.QuickSort(Comparer<int>.Default, ref comparisonQuick);
             Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
+
+            comparisonQuick = 0;
+            myListReverseSortedInsert.QuickSort(Comparer<int>.Default, ref comparisonQuick);
+            Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
+
+            comparisonQuick = 0;
+            myListNotSortedInsert.QuickSort(Comparer<int>.Default, ref comparisonQuick);
+            Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
+
+            Console.ReadKey();
+
             //Console.WriteLine("Sorted list: " + string.Join(", ", sorted));
 
             //WriteJson(sorted, 1);
