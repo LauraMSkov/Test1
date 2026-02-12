@@ -15,14 +15,37 @@ namespace UnitTestTest
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod2() 
+        public void TestMethod2()
         {
-            //int comparison = 0;
-            var emptyList = new MyList<int>(0);
+            //Arrange
+            Program p = new Program();
 
-            //MyList<int>.InsertSort(emptyList, Comparer<int>.Default, ref comparison);
+            MyList<int> ranList = new MyList<int>();
+            MyList<int> conList = new MyList<int>();
+            List<int> random = new List<int>() { 3, 2, 4, 1, 5 };
+            List<int> control = new List<int>() { 1, 2, 3, 4, 5 };
 
-            Assert.AreEqual(0, emptyList.Count);
+            foreach (var item in random)
+            {
+                ranList.Add(item);
+            }
+            foreach (var item in control)
+            {
+                conList.Add(item);
+            }
+
+            //Act
+            int comparisonCount = 0;
+            ranList.InsertSort(Comparer<int>.Default, ref comparisonCount);
+
+            var actual = new List<int>();
+            for (int i = 0; i < ranList.Count; i++)
+            {
+                actual.Add(ranList[i]);
+            }
+
+            //Assert
+            CollectionAssert.AreEqual(control, actual);
         }
     }
 }
