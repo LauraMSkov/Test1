@@ -42,15 +42,15 @@ namespace Test
             //Kører InsertSort på MyList og udskriver antal sammenligninger
             int comparisonCount = 0;
             myListSortedInsert.InsertSort(Comparer<int>.Default, ref comparisonCount);
-            Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
+            Console.WriteLine("Sammenligninger for InsertSort på en sorterede Liste: " + comparisonCount);
 
             comparisonCount = 0;
             myListReverseSortedInsert.InsertSort(Comparer<int>.Default, ref comparisonCount);
-            Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
+            Console.WriteLine("Sammenligninger for InsertSort på en omvendtsorteret liste: " + comparisonCount);
 
             comparisonCount = 0;
             myListNotSortedInsert.InsertSort(Comparer<int>.Default, ref comparisonCount);
-            Console.WriteLine("Sammenligninger for InsertSort: " + comparisonCount);
+            Console.WriteLine("Sammenligninger for InsertSort på en random sorterede liste: " + comparisonCount);
 
             //Laver nye MyLists til QuickSort
             MyList<int> myListSortedQuick = new MyList<int>();
@@ -72,17 +72,15 @@ namespace Test
             //Kører Quicksort på MyListerne og udskriver antal sammenligninger
             int comparisonQuick = 0;
             myListSortedInsert.QuickSort(Comparer<int>.Default, ref comparisonQuick);
-            Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
+            Console.WriteLine("Sammenligninger for QuickSort på en sorterede liste: " + comparisonQuick);
 
             comparisonQuick = 0;
             myListReverseSortedInsert.QuickSort(Comparer<int>.Default, ref comparisonQuick);
-            Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
+            Console.WriteLine("Sammenligninger for QuickSort på en omvendt sorterede liste: " + comparisonQuick);
 
             comparisonQuick = 0;
             myListNotSortedInsert.QuickSort(Comparer<int>.Default, ref comparisonQuick);
-            Console.WriteLine("Sammenligninger for QuickSort: " + comparisonQuick);
-
-            Console.ReadKey();
+            Console.WriteLine("Sammenligninger for QuickSort på en random sorterede liste: " + comparisonQuick);
 
             //Console.WriteLine("Sorted list: " + string.Join(", ", sorted));
 
